@@ -10,14 +10,14 @@ router.get("/", function(req, res){
     res.render("login");
 });
 router.get(("/landing"),function(req,res)
-{console.log("hello");
+{
     User.find({},function(err,all)
     {
         if(err)
         console.log("error recovering")
         else
         {
-            console.log("hello1");
+            
             res.render("landing",{user:all});
         }
     })
