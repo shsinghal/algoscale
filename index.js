@@ -2,11 +2,26 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var User = require("./user");
+//var request = require("request");
+const ejs = require("ejs");
+
 //root route
 router.get("/", function(req, res){
-    res.render("landing");
+    res.render("login");
 });
-
+router.get(("/landing"),function(req,res)
+{console.log("hello");
+    User.find({},function(err,all)
+    {
+        if(err)
+        console.log("error recovering")
+        else
+        {
+            console.log("hello1");
+            res.render("landing",{user:all});
+        }
+    })
+})
 // show register form
 router.get("/register", function(req, res){
    res.render("register"); 
@@ -34,7 +49,7 @@ router.get("/login", function(req, res){
 //handling login logic
 router.post("/login", passport.authenticate("local", 
     {
-        successRedirect: "/",
+        successRedirect: "/landing",
         failureRedirect: "/login"
     }), function(req, res){
 });
