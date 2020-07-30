@@ -9,6 +9,8 @@ const ejs = require("ejs");
 router.get("/", function(req, res){
     res.render("login");
 });
+
+
 router.get(("/landing"),function(req,res)
 {
     User.find({},function(err,all)
@@ -36,7 +38,7 @@ router.post("/register", function(req, res){
             return res.render("register");
         }
         passport.authenticate("local")(req, res, function(){
-           res.redirect("/login"); 
+           res.redirect("/landing"); 
         });
     });
 });
@@ -60,5 +62,13 @@ router.get("/logout", function(req, res){
    res.redirect("/login");
 });
 
-
+router.post("/:commentId", function(req, res){
+    User.findOneAndDelete(req.params.commentId, function(err){
+        if(err){
+            console.log("PROBLEM!");
+        } else {
+            res.redirect("/landing");
+        }
+    })
+});
 module.exports = router;
